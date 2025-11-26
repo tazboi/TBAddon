@@ -1,8 +1,18 @@
+rootProject.name = "OdinAddon"
+
 pluginManagement {
     repositories {
-        maven("https://maven.fabricmc.net/") {
-            name = "Fabric"
-        }
+        mavenCentral()
         gradlePluginPortal()
+        maven("https://maven.fabricmc.net/")
+        maven("https://jitpack.io")
+    }
+
+    val loom_version: String by settings
+    val kotlin_version: String by settings
+
+    plugins {
+        id("fabric-loom") version loom_version
+        kotlin("jvm") version kotlin_version
     }
 }

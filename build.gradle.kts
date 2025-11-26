@@ -1,14 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
     id("fabric-loom")
-    id("maven-publish")
+    kotlin("jvm")
+    `maven-publish`
 }
 
-version = project.property("mod_version") as String
-group = project.property("maven_group") as String
+group = property("maven_group")!!
+version = property("mod_version")!!
 
 repositories {
     mavenCentral()
@@ -17,12 +16,14 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
+    minecraft("com.mojang:minecraft:${property("minecraft_version")}")
+    mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
+    modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:${property("devauth_version")}")
+    modImplementation("com.github.odtheking:odinfabric:${property("odin_version")}")
 }
 
 loom {
