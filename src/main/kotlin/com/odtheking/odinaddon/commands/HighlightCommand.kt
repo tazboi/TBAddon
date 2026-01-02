@@ -2,7 +2,6 @@ package com.odtheking.odinaddon.commands
 
 import com.github.stivais.commodore.Commodore
 import com.github.stivais.commodore.utils.GreedyString
-import com.odtheking.odin.config.Config
 import com.odtheking.odin.utils.Color
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odinaddon.features.impl.skyblock.Highlight2
@@ -22,7 +21,6 @@ val highlightCommand = Commodore("highlight", "hl") {
         val color = Highlight2.defaultColor
         Highlight2.highlightMap[trimmed] = color
         modMessage("${trimmed} added to highlight list")
-        Config.save()
     }
 
 
@@ -36,7 +34,6 @@ val highlightCommand = Commodore("highlight", "hl") {
             )
         Highlight2.highlightMap.remove(toRemove)
         modMessage("$toRemove was successfully removed from the highlight list.")
-        Config.save()
     }
 
     literal("list", "l").runs {

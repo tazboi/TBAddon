@@ -27,7 +27,7 @@ object ProtectItem : Module(
     description = "Protects selected items from being dropped."
 ) {
     private val preventDrop by BooleanSetting("Dropping", true, desc = "Prevent dropping whitelisted items.")
-    var itemList by ListSetting("Protected Items Map", mutableListOf<ProtectedItem>())
+    var itemList =  this.registerSetting(ListSetting("Protected Items Map", mutableListOf<ProtectedItem>())).value
 
     init {
         // TODO: Experiment with drop packet instead of letting the player drop the item themself client-side.
