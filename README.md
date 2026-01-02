@@ -4,7 +4,7 @@ This is a project made using [OdinAddon](https://github.com/odtheking/OdinAddon)
 
 ## Dependencies
 
-To setup the addon, you will need the latest version of OdinFabric 1.21.8, currently 0.0.5.
+To setup the addon, you will need the latest version of OdinFabric 1.21.8, currently 0.1.2. This project will be ported to 1.21.10 in the future.
 
 ### Notes
 

@@ -2,7 +2,6 @@ package com.odtheking.odinaddon.commands
 
 import com.github.stivais.commodore.Commodore
 import com.odtheking.odin.OdinMod
-import com.odtheking.odin.config.Config
 import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.itemUUID
 import com.odtheking.odin.utils.modMessage
@@ -18,7 +17,6 @@ val protectItemCommand = Commodore("protectitem", "pi") {
         val itemList = ProtectItem.itemList
         itemList.find { protectedItem.uuid == it.uuid || protectedItem.sbID == it.sbID }?.let {
             itemList.remove(it)
-            Config.save()
             return@runs modMessage(
                 Component.literal("Removed ")
                     .append(item.customName ?: Component.literal(it.sbID))
@@ -33,6 +31,5 @@ val protectItemCommand = Commodore("protectitem", "pi") {
                 .append(Component.literal(" to protection whitelist."))
         )
 
-        Config.save()
     }
 }

@@ -26,7 +26,7 @@ object Click : Module(
     private val lcEnabled by BooleanSetting("Left Click", false, desc = "Toggle Left Click AC")
     private val lcHold by BooleanSetting("Left Click Hold", false, desc = "Hold to Use AC").withDependency { lcEnabled }
     private val lcUse by KeybindSetting(
-        "Use",
+        "Use LC",
         GLFW.GLFW_KEY_UNKNOWN,
         desc = "Keybind to Use"
     ).withDependency { lcEnabled }
@@ -46,7 +46,7 @@ object Click : Module(
         desc = "Hold to Use AC"
     ).withDependency { rcEnabled }
     private val rcUse by KeybindSetting(
-        "Use",
+        "Use RC",
         GLFW.GLFW_KEY_UNKNOWN,
         desc = "Keybind to Use"
     ).withDependency { rcEnabled }

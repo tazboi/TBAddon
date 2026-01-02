@@ -2,6 +2,7 @@ package com.odtheking.odinaddon
 
 import com.odtheking.odin.clickgui.settings.impl.HUDSetting
 import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
+import com.odtheking.odin.config.ModuleConfig
 import com.odtheking.odin.events.core.EventBus
 import com.odtheking.odin.features.ModuleManager
 import com.odtheking.odin.features.Module
@@ -17,6 +18,7 @@ import com.odtheking.odinaddon.features.impl.skyblock.BowPullback
 import com.odtheking.odinaddon.features.impl.skyblock.Click
 import com.odtheking.odinaddon.features.impl.skyblock.Highlight2
 import com.odtheking.odinaddon.features.impl.skyblock.ProtectItem
+import com.odtheking.odinaddon.features.impl.skyblock.TestModule
 import com.odtheking.odinaddon.features.impl.skyblock.event.CustomEventDispatcher
 import com.odtheking.odinaddon.utils.EntityCache
 import net.fabricmc.api.ClientModInitializer
@@ -36,26 +38,6 @@ object OdinAddon : ClientModInitializer {
         listOf(this, CustomEventDispatcher, EntityCache).forEach { EventBus.subscribe(it) }
 
         // Register modules by adding to the function
-        addModules(
-            BowPullback, ItemRarity, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets,
-            Animations)
-    }
-
-    @JvmStatic
-    fun addModules(vararg modules: Module) {
-        modules.forEach { module ->
-            ModuleManager.modules.add(module)
-
-            module.key?.let {
-                module.register(KeybindSetting("Keybind", it, "Toggles the module").apply {
-                    onPress = { module.onKeybind() }
-                })
-            }
-
-            for (setting in module.settings) {
-                if (setting is KeybindSetting) ModuleManager.keybindSettingsCache.add(setting)
-                if (setting is HUDSetting) ModuleManager.hudSettingsCache.add(setting)
-            }
-        }
+        ModuleManager.registerModules(ModuleConfig("UC30.json"), BowPullback, ItemRarity, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations)
     }
 }

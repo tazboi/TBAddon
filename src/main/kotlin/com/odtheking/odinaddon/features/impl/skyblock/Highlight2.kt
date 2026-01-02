@@ -25,7 +25,7 @@ object Highlight2 : Module(
     val defaultColor by ColorSetting("Default Color", Colors.WHITE, true, desc = "The color of the highlight.")
     private val renderStyle by SelectorSetting("Render Style", "Outline", listOf("Filled", "Outline", "Filled Outline"), desc = "Style of the box.")
     private val trueESP by BooleanSetting("True ESP", false, desc = "See Highlight through blocks")
-    var highlightMap by MapSetting("Highlight Map", mutableMapOf<String, Color>())
+    var highlightMap = this.registerSetting(MapSetting("Highlight Map", mutableMapOf<String, Color>())).value
     private val OVERLOAD_REGEX = Regex("§f✯[\\s\\S]*?✯", RegexOption.DOT_MATCHES_ALL)
 
     val highlightCollection = EntityCollection(
