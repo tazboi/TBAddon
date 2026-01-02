@@ -5,8 +5,21 @@ import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
 import com.odtheking.odin.events.core.EventBus
 import com.odtheking.odin.features.ModuleManager
 import com.odtheking.odin.features.Module
+import com.odtheking.odinaddon.commands.highlightCommand
 import com.odtheking.odinaddon.commands.odinAddonCommand
+import com.odtheking.odinaddon.commands.protectItemCommand
+import com.odtheking.odinaddon.features.impl.dungeon.Secrets
+import com.odtheking.odinaddon.features.impl.dungeon.MimicChestHighlight
+import com.odtheking.odinaddon.features.impl.floor7.WitherHighlight
+import com.odtheking.odinaddon.features.impl.render.Animations
+import com.odtheking.odinaddon.features.impl.render.ItemRarity
+import com.odtheking.odinaddon.features.impl.skyblock.BowPullback
+import com.odtheking.odinaddon.features.impl.skyblock.Click
+import com.odtheking.odinaddon.features.impl.skyblock.Highlight2
+import com.odtheking.odinaddon.features.impl.skyblock.ProtectItem
 import com.odtheking.odinaddon.features.impl.skyblock.TestModule
+import com.odtheking.odinaddon.features.impl.skyblock.event.CustomEventDispatcher
+import com.odtheking.odinaddon.utils.EntityCache
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 
@@ -17,14 +30,16 @@ object OdinAddon : ClientModInitializer {
 
         // Register commands by adding to the array
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            arrayOf(odinAddonCommand).forEach { commodore -> commodore.register(dispatcher) }
+            arrayOf(odinAddonCommand, highlightCommand, protectItemCommand).forEach { commodore -> commodore.register(dispatcher) }
         }
 
         // Register objects to event bus by adding to the list
-        listOf(this).forEach { EventBus.subscribe(it) }
+        listOf(this, CustomEventDispatcher, EntityCache).forEach { EventBus.subscribe(it) }
 
         // Register modules by adding to the function
-        addModules(TestModule)
+        addModules(
+            BowPullback,TestModule, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets,
+            Animations)
     }
 
     @JvmStatic

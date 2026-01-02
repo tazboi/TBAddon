@@ -4,6 +4,9 @@
   "package": "com.odtheking.odinaddon.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "LevelChunkMixin",
+    "LivingEntityMixin",
+    "LocalPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -12,6 +15,11 @@
     "requireAnnotations": true
   },
   "client": [
-    "MinecraftMixin"
+    "AbstractContainerScreenMixin",
+    "GuiMixin",
+    "ItemInHandRendererMixin",
+    "KeyboardHandlerMixin",
+    "LocalPlayerMixin",
+    "MouseHandlerMixin"
   ]
 }
