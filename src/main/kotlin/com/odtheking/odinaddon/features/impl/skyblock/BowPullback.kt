@@ -67,8 +67,13 @@ object BowPullback : Module(
     }
 
     inline val ItemStack.isPullbackBow: Boolean
-        get() = this.item is BowItem && this.lore.last().string.contains("BOW") && !this.lore.any {
-            it.string.lowercase().contains("shortbow")
+        get() {
+            if (this.item !is BowItem) return false
+
+            val lore = this.lore
+            val lastLine = lore.lastOrNull()?.string ?: return false
+            return lastLine.contains("BOW") &&
+                    lore.none { it.string.lowercase().contains("shortbow") }
         }
 
 }
