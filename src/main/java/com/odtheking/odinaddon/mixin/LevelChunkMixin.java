@@ -15,10 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LevelChunk.class)
 public class LevelChunkMixin {
 
-    @Inject(
-            method = "setBlockState",
-            at = @At("HEAD")
-    )
+    @Inject(method = "setBlockState", at = @At("HEAD"))
     private static void preSetBlock(BlockPos blockPos, BlockState blockState, int i, CallbackInfoReturnable<BlockState> cir) {
        if (!blockState.isAir()) new WorldEvent.AddBlock(blockState, blockPos).postAndCatch();
     }
