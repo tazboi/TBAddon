@@ -44,6 +44,7 @@ val visualWordsCommand = Commodore("visualwords", "vw") {
     }
 
     literal("list", "l").runs {
+        if (VisualWords.visualWordMap.isEmpty()) return@runs modMessage("Visual Words list is empty.")
         VisualWords.visualWordMap.forEach { (word1, word2) ->
             val line = Component.literal("- $word1 --> $word2 ")
                 .append(
