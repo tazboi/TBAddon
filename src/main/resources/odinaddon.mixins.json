@@ -16,10 +16,15 @@
   },
   "client": [
     "AbstractContainerScreenMixin",
+    "BlindnessFogEnvironmentMixin",
+    "CameraMixin",
+    "EffectsInInventoryMixin",
+    "GuiGraphicsMixin",
     "GuiMixin",
     "ItemInHandRendererMixin",
     "KeyboardHandlerMixin",
     "LocalPlayerMixin",
-    "MouseHandlerMixin"
+    "MouseHandlerMixin",
+    "ScreenEffectRendererMixin"
   ]
 }

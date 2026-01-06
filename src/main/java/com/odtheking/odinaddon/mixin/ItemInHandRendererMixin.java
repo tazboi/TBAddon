@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,6 +34,12 @@ public abstract class ItemInHandRendererMixin {
     @Shadow
     private float oOffHandHeight;
 
+    @Shadow
+    protected abstract void applyItemArmTransform(PoseStack poseStack, HumanoidArm arm, float partialTicks);
+
+    @Shadow
+    protected abstract void applyItemArmAttackTransform(PoseStack poseStack, HumanoidArm arm, float swingProgress);
+
     @Inject(
             method = "renderArmWithItem",
             at = @At(
@@ -52,10 +59,7 @@ public abstract class ItemInHandRendererMixin {
         if (interactionHand == InteractionHand.MAIN_HAND) Animations.INSTANCE.hookItemTransform(poseStack, equipProgress, swingProgress);
     }
 
-    @Inject(
-            method = "tick",
-            at = @At("TAIL")
-    )
+    @Inject(method = "tick", at = @At("TAIL"))
     private void postTick(CallbackInfo ci) {
         if (Animations.INSTANCE.getStopEquipAnimation()) {
             this.oMainHandHeight = 1.0f;
@@ -73,15 +77,19 @@ public abstract class ItemInHandRendererMixin {
             )
     )
     private float overrideAttackStrengthScale(float originalValue) {
-        if (Animations.INSTANCE.getStopEquipAnimation()) return 1f;
+        if (Animations.INSTANCE.getStopEquipAnimation() || Animations.INSTANCE.getStopFullSwing()) return 1f;
         return originalValue;
     }
 
-    @Inject(
-            method = "shouldInstantlyReplaceVisibleItem",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "swingArm", at = @At("HEAD"), cancellable = true)
+    private void stopSwing(float swingProgress, float equipProgress, PoseStack poseStack, int swingTicks, HumanoidArm arm, CallbackInfo ci) {
+        if (!Animations.INSTANCE.getStopFullSwing()) return;
+        ci.cancel();
+        this.applyItemArmTransform(poseStack, arm, equipProgress);
+        this.applyItemArmAttackTransform(poseStack, arm, swingProgress);
+    }
+
+    @Inject(method = "shouldInstantlyReplaceVisibleItem", at = @At("HEAD"), cancellable = true)
     private void forceInstantlyReplace(ItemStack itemStack, ItemStack itemStack2, CallbackInfoReturnable<Boolean> cir) {
         if (Animations.INSTANCE.getStopEquipAnimation()) cir.setReturnValue(true);
     }
