@@ -19,7 +19,7 @@
     "BlindnessFogEnvironmentMixin",
     "CameraMixin",
     "EffectsInInventoryMixin",
-    "GuiGraphicsMixin",
+    "FontMixin",
     "GuiMixin",
     "ItemInHandRendererMixin",
     "KeyboardHandlerMixin",
