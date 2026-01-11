@@ -5,7 +5,6 @@ import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.events.core.onSend
 import com.odtheking.odin.utils.handlers.TickTask
 import com.odtheking.odin.utils.handlers.TickTasks
-import com.odtheking.odin.utils.modMessage
 import net.minecraft.network.protocol.game.ClientboundSetHeldSlotPacket
 import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket
 
