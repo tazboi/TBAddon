@@ -46,10 +46,13 @@ object Secrets : Module(
     val SECRET_REGEX = Regex("§\\d+/\\d+\\sSecrets")
     private var currSecrets = ""
 
-    private val secretHud by HUD("Secret Hud", desc = "Displays the number of secrets in a room.") {
-        if (it) textDim("§6Secrets 67/67", 0, 0, Colors.WHITE)
-        if (!DungeonUtils.inDungeons && currSecrets.isEmpty() && !it) return@HUD 0 to 0
-        textDim(currSecrets, 0, 0)
+    private val secretHud by HUD("Secret Hud", desc = "Displays the number of secrets in a room.") { example ->
+        if (example) textDim("§6Secrets 67/67", 0, 0, Colors.WHITE)
+        else if (!DungeonUtils.inDungeons && currSecrets.isEmpty()) {
+            textDim(currSecrets, 0, 0)
+        }
+        else return@HUD 0 to 0
+
     }
 
     init {

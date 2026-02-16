@@ -20,6 +20,7 @@ import com.odtheking.odinaddon.features.impl.render.RenderModifier
 import com.odtheking.odinaddon.features.impl.render.VisualWords
 import com.odtheking.odinaddon.features.impl.skyblock.BowPullback
 import com.odtheking.odinaddon.features.impl.skyblock.Click
+import com.odtheking.odinaddon.features.impl.skyblock.Cooldowns
 import com.odtheking.odinaddon.features.impl.skyblock.Highlight2
 import com.odtheking.odinaddon.features.impl.skyblock.ItemSwap
 import com.odtheking.odinaddon.features.impl.skyblock.ProtectItem
@@ -47,8 +48,7 @@ object OdinAddon : ClientModInitializer {
         // Register modules by adding to the function
         ModuleManager.registerModules(
             ModuleConfig("UC30.json"), BowPullback, ItemRarity, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations,
-            RenderModifier, PlayerDisplayPlus, VisualWords, ItemSwap,
-            Sacks
+            RenderModifier, PlayerDisplayPlus, VisualWords, ItemSwap, Sacks, Cooldowns
         )
     }
 }
