@@ -11,6 +11,6 @@ object PlayerDisplayPlus : Module(
     val titles by BooleanSetting("Titles", true, desc = "Whether to render titles.")
     val vignette by BooleanSetting("Vignette", true, desc = "Whether to render vignette (screen darkening).")
     val portal by BooleanSetting("Portal", true, desc = "Whether to render portal overlay.")
-    val nausea by BooleanSetting("Nausea", true, desc = "Wehther to render nausea")
+    val nausea by BooleanSetting("Nausea", true, desc = "Whether to render nausea")
 
 }
