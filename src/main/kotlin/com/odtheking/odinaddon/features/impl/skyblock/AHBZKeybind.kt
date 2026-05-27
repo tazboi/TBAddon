@@ -17,7 +17,7 @@ object AHBZKeybind : Module(
 
     init {
         on<GuiEvent.KeyPress> {
-            if (screen !is InventoryScreen || keyCode != keybind.value) return@on
+            if (screen !is InventoryScreen || input.key != keybind.value) return@on
             val clickedSlot = (screen as AbstractContainerScreenAccessor).hoveredSlot?.index.takeIf { it in 5 until 45 } ?: return@on
         }
     }
