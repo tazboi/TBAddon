@@ -5,7 +5,6 @@ import com.odtheking.odin.clickgui.settings.impl.ColorSetting
 import com.odtheking.odin.clickgui.settings.impl.SelectorSetting
 import com.odtheking.odin.events.BlockUpdateEvent
 import com.odtheking.odin.events.RenderEvent
-import com.odtheking.odin.events.WorldLoadEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Color.Companion.multiplyAlpha
@@ -52,11 +51,11 @@ object MimicChestHighlight : Module(
     val mimic = EntityCollection({ it is Zombie && it.isBaby })
 
     init {
-        on<RenderEvent.Last> {
+        on<RenderEvent.Extract> {
             if (!DungeonUtils.inDungeons || DungeonUtils.inBoss) return@on
             currBlock?.let {
                 if (roomName != DungeonUtils.currentRoom?.data?.name) return@let
-                context.drawStyledBox(
+                drawStyledBox(
                     AABB(it),
                     chestColor.multiplyAlpha(0.5f),
                     renderStyle,
@@ -65,7 +64,7 @@ object MimicChestHighlight : Module(
             }
 
             mimic.firstOrNull()?.let {
-                context.drawStyledBox(
+                drawStyledBox(
                     it.renderBoundingBox,
                     hlColor.multiplyAlpha(0.5f),
                     renderStyle,
@@ -97,7 +96,7 @@ object MimicChestHighlight : Module(
             }
         }
 
-        on<WorldLoadEvent> {
+        on<WorldEvent.Unload> {
             currBlock = null
             roomName = null
         }

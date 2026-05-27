@@ -1,7 +1,6 @@
 package com.odtheking.odinaddon.features.impl.skyblock
 
 import com.mojang.blaze3d.platform.InputConstants
-import com.odtheking.mixin.accessors.KeyMappingAccessor
 import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
@@ -15,6 +14,7 @@ import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odinaddon.features.impl.skyblock.event.KeyboardEvent
 import com.odtheking.odinaddon.features.impl.skyblock.event.MouseEvent
+import com.odtheking.odinaddon.mixin.KeyMappingAccessor
 import net.minecraft.client.KeyMapping
 import net.minecraft.network.protocol.game.ClientboundAnimatePacket
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
@@ -137,9 +137,9 @@ object Click : Module(
     val InputConstants.Key.isDown: Boolean
         get() {
             val v = this.value;
-            val mouse = if (v in 0..7) GLFW.glfwGetMouseButton(mc.window.window, v) else -1;
+            val mouse = if (v in 0..7) GLFW.glfwGetMouseButton(mc.window.handle(), v) else -1;
             val key =
-                if (v >= GLFW.GLFW_KEY_SPACE && v <= GLFW.GLFW_KEY_LAST) GLFW.glfwGetKey(mc.window.window, v) else -1;
+                if (v >= GLFW.GLFW_KEY_SPACE && v <= GLFW.GLFW_KEY_LAST) GLFW.glfwGetKey(mc.window.handle(), v) else -1;
 
             return 1.equalsOneOf(mouse, key);
         }

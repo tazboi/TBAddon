@@ -1,5 +1,7 @@
 package com.odtheking.odinaddon.mixin;
 
+import com.odtheking.odin.OdinMod;
+import com.odtheking.odinaddon.features.impl.skyblock.event.InputPassEvent;
 import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -40,6 +42,18 @@ public class MinecraftMixin {
     private void preWhileAttack(boolean bl, CallbackInfo ci) {
         if (!bl) return;
         handleHitResult(ci, true);
+    }
+
+    @Inject(
+            method = "handleKeybinds",
+            at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/KeyMapping;consumeClick()Z",
+            ordinal = 3
+            )
+    )
+    private void hotbarKeyPass(CallbackInfo ci) {
+        (new InputPassEvent.HotbarKeys()).postAndCatch();
     }
 
     @Unique

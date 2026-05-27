@@ -33,7 +33,7 @@ object Animations : Module (
     val stopFullSwing by BooleanSetting("Stop Arm Swing", false, desc = "Stops entire player arm from swinging.")
     val stopSwingSpam by BooleanSetting("Stop Swing Spam", false, desc = "Stops spam swinging on spam clicks/block breaks.")
 
-    fun hookItemTransform(matrix: PoseStack, equipProgress: Float, swingProgress: Float){
+    fun hookItemTransform(matrix: PoseStack){
         if (!enabled) return
 
         matrix.apply {

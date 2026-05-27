@@ -4,9 +4,11 @@ import com.odtheking.odin.clickgui.settings.impl.NumberSetting
 import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.events.core.onSend
 import com.odtheking.odin.features.Module
+import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.handlers.TickTask
 import com.odtheking.odin.utils.lore
 import com.odtheking.odin.utils.render.textDim
+import com.odtheking.odinaddon.utils.getColor
 import net.minecraft.network.protocol.game.ClientboundBlockChangedAckPacket
 import net.minecraft.network.protocol.game.ServerboundUseItemPacket
 import net.minecraft.world.InteractionHand
@@ -22,10 +24,12 @@ object BowPullback : Module(
     private val tickHud by HUD(
         "Pullback Hud",
         desc = "Displays number of ticks the server has registered the client has pulled back the bow."
-    ) {
-        val itemInHand = mc.player?.getItemInHand(InteractionHand.MAIN_HAND)
-        if (!itemInHand!!.isPullbackBow || ticksHeld < 0) return@HUD 0 to 0
-        textDim("§b\uD83C\uDFF9: ${getColor(ticksHeld, maxTicks)}$ticksHeld", 0, 0)
+    ) { example ->
+        if (example) textDim("§b\uD83C\uDFF9: ${maxTicks}", 0, 0, Colors.WHITE)
+        else if (mc.player?.getItemInHand(InteractionHand.MAIN_HAND)!!.isPullbackBow && ticksHeld > 0) {
+            textDim("§b\uD83C\uDFF9: ${getColor(ticksHeld, maxTicks)}$ticksHeld", 0, 0)
+        }
+        else return@HUD 0 to 0
     }
     private val maxTicks by NumberSetting("Max Ticks", 10, 3, 40, 1, desc = "Max ticks to display.")
 
@@ -57,14 +61,6 @@ object BowPullback : Module(
 
     }
 
-    private fun getColor(ticks: Int, maxTicks: Int): String {
-        return when {
-            ticks == maxTicks -> "§a"
-            ticks >= (maxTicks / 2) -> "§e"
-            ticks < (maxTicks / 2) -> "§c"
-            else -> "§b"
-        }
-    }
 
     inline val ItemStack.isPullbackBow: Boolean
         get() {

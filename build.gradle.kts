@@ -29,6 +29,16 @@ dependencies {
         implementation("com.github.stivais:Commodore:$it")
         include("com.github.stivais:Commodore:$it")
     }
+
+    property("minecraft_lwjgl_version").let { lwjglVersion ->
+        modImplementation("org.lwjgl:lwjgl-nanovg:$lwjglVersion")
+        include("org.lwjgl:lwjgl-nanovg:$lwjglVersion")
+
+        listOf("windows", "linux", "macos", "macos-arm64").forEach { os ->
+            modImplementation("org.lwjgl:lwjgl-nanovg:$lwjglVersion:natives-$os")
+            include("org.lwjgl:lwjgl-nanovg:$lwjglVersion:natives-$os")
+        }
+    }
 }
 
 loom {
