@@ -18,7 +18,7 @@ object ItemRarity : Module (
 
     init {
         //TODO: RenderPipeline for other shapes (circles, etc.)
-        on<GuiEvent.DrawSlot> {
+        on<GuiEvent.RenderSlot> {
             val item = slot.item
             if (item.isEmpty) return@on
 

@@ -6,6 +6,7 @@ import com.odtheking.odin.clickgui.settings.impl.MapSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
 import com.odtheking.odin.events.GuiEvent
 import com.odtheking.odin.events.InputEvent
+import com.odtheking.odin.events.ScreenEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.features.ModuleManager
@@ -32,7 +33,7 @@ object ItemSwap: Module(
     private var previousItem: ItemStack? = null
 
     init {
-        on<GuiEvent.KeyPress> {
+        on<ScreenEvent.KeyPress> {
             if (screen !is InventoryScreen || input.key != setItemPairKeybind.value) return@on
             val item = (screen as AbstractContainerScreenAccessor).hoveredSlot?.item.takeUnless { it!!.isEmpty } ?: return@on
             cancel()
@@ -68,7 +69,7 @@ object ItemSwap: Module(
             }
         }
 
-        on<GuiEvent.Close> {
+        on<ScreenEvent.Close> {
             previousItem = null
         }
 

@@ -1,6 +1,7 @@
 package com.odtheking.odinaddon.mixin;
 
 import com.odtheking.odinaddon.features.impl.render.RenderModifier;
+import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BlindnessFogEnvironmentMixin {
 
    @Inject(method = "setupFog", at = @At("HEAD"), cancellable = true)
-   private void stopBlindness(FogData fogData, Entity entity, BlockPos blockPos, ClientLevel level, float f, DeltaTracker tickCounter, CallbackInfo ci) {
+   private void stopBlindness(FogData fogData, Camera camera, ClientLevel clientLevel, float f, DeltaTracker deltaTracker, CallbackInfo ci) {
        if (!RenderModifier.INSTANCE.getEnabled() || !RenderModifier.INSTANCE.getNoBlindness()) return;
        fogData.environmentalStart = f;
        fogData.environmentalEnd = f;

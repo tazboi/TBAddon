@@ -12,7 +12,7 @@ import com.odtheking.odinaddon.commands.protectItemCommand
 import com.odtheking.odinaddon.commands.visualWordsCommand
 import com.odtheking.odinaddon.features.impl.dungeon.Secrets
 import com.odtheking.odinaddon.features.impl.dungeon.MimicChestHighlight
-import com.odtheking.odinaddon.features.impl.floor7.WitherHighlight
+import com.odtheking.odinaddon.features.impl.boss.WitherHighlight
 import com.odtheking.odinaddon.features.impl.render.Animations
 import com.odtheking.odinaddon.features.impl.render.ItemRarity
 import com.odtheking.odinaddon.features.impl.render.PlayerDisplayPlus

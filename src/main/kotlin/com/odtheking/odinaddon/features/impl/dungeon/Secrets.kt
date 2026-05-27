@@ -3,20 +3,16 @@ package com.odtheking.odinaddon.features.impl.dungeon
 import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.SelectorSetting
-import com.odtheking.odin.events.GuiEvent
+import com.odtheking.odin.events.ScreenEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
-import com.odtheking.odin.features.impl.floor7.TerminalSolver.startsWithColor
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.equalsOneOf
 import com.odtheking.odin.utils.itemId
-import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.textDim
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
-import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket
 import net.minecraft.network.protocol.game.ClientboundSystemChatPacket
 import net.minecraft.world.level.block.ChestBlock
 import net.minecraft.world.level.block.TrappedChestBlock
@@ -65,7 +61,7 @@ object Secrets : Module(
             currSecrets = SECRET_REGEX.find(content.string)?.value ?: "";
         }
 
-        on<GuiEvent.Open> {
+        on<ScreenEvent.Open> {
             if (closeChestOption != 0 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
                     "Chest",
                     "Large Chest"
@@ -74,7 +70,7 @@ object Secrets : Module(
             mc.player?.closeContainer()
         }
 
-        on<GuiEvent.KeyPress> {
+        on<ScreenEvent.KeyPress> {
             if (closeChestOption != 1 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
                     "Chest",
                     "Large Chest"

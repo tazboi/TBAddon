@@ -6,9 +6,6 @@ import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
 import com.odtheking.odin.features.Module
-import net.minecraft.world.item.ItemStack
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
-import kotlin.math.exp
 
 /**
  * Parts taken from:

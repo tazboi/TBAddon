@@ -18,7 +18,7 @@ import com.odtheking.odinaddon.features.impl.skyblock.event.WorldEvent
 import com.odtheking.odinaddon.utils.EntityCollection
 import com.odtheking.odinaddon.utils.getRoomData
 import net.minecraft.core.BlockPos
-import net.minecraft.world.entity.monster.Zombie
+import net.minecraft.world.entity.monster.zombie.Zombie
 import net.minecraft.world.level.block.TrappedChestBlock
 import net.minecraft.world.phys.AABB
 

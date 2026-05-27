@@ -67,7 +67,7 @@ public abstract class ItemInHandRendererMixin {
             method = "tick",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/player/LocalPlayer;getAttackStrengthScale(F)F"
+                    target = "Lnet/minecraft/client/player/LocalPlayer;getItemSwapScale(F)F"
             )
     )
     private float overrideAttackStrengthScale(float originalValue) {
@@ -76,10 +76,10 @@ public abstract class ItemInHandRendererMixin {
     }
 
     @Inject(method = "swingArm", at = @At("HEAD"), cancellable = true)
-    private void stopSwing(float swingProgress, float equipProgress, PoseStack poseStack, int swingTicks, HumanoidArm arm, CallbackInfo ci) {
+    private void stopSwing(float swingProgress, PoseStack poseStack, int swingTicks, HumanoidArm arm, CallbackInfo ci) {
         if (!Animations.INSTANCE.getEnabled() || !Animations.INSTANCE.getStopFullSwing()) return;
         ci.cancel();
-        this.applyItemArmTransform(poseStack, arm, equipProgress);
+        this.applyItemArmTransform(poseStack, arm, 0.0f);
         this.applyItemArmAttackTransform(poseStack, arm, swingProgress);
     }
 

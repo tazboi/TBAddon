@@ -1,22 +1,19 @@
-package com.odtheking.odinaddon.features.impl.floor7
+package com.odtheking.odinaddon.features.impl.boss
 
-import com.odtheking.odin.features.Module
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.ColorSetting
 import com.odtheking.odin.clickgui.settings.impl.SelectorSetting
 import com.odtheking.odin.events.RenderEvent
 import com.odtheking.odin.events.core.on
+import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Color.Companion.multiplyAlpha
 import com.odtheking.odin.utils.Color.Companion.withAlpha
 import com.odtheking.odin.utils.Colors
-import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odin.utils.renderBoundingBox
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.WorldEvent
 import com.odtheking.odinaddon.utils.EntityCollection
-import com.odtheking.odinaddon.utils.name
-import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket
 import net.minecraft.world.entity.boss.wither.WitherBoss
 import net.minecraft.world.phys.AABB
 
