@@ -7,9 +7,11 @@ import com.odtheking.odin.events.core.CancellableEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
+import com.odtheking.odin.utils.createSoundSettings
 import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.itemUUID
 import com.odtheking.odin.utils.modMessage
+import com.odtheking.odin.utils.playSoundSettings
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.DropEvent
 import com.odtheking.odinaddon.features.impl.skyblock.event.SlotInteractEvent
@@ -27,7 +29,14 @@ object ProtectItem : Module(
     description = "Protects selected items from being dropped."
 ) {
     private val preventDrop by BooleanSetting("Dropping", true, desc = "Prevent dropping whitelisted items.")
-    var itemList =  this.registerSetting(ListSetting("Protected Items Map", mutableListOf<ProtectedItem>())).value
+    private val sendSound by BooleanSetting(
+        "Drop Cancel Sound",
+        false,
+        desc = "Send sound instead of message when an item is dropped."
+    )
+    private val soundSettings = createSoundSettings("Drop Sound", "entity.blaze.hurt") { sendSound }
+    var itemList = this.registerSetting(ListSetting("Protected Items Map", mutableListOf<ProtectedItem>())).value
+    private var lastPlayed = 0L
 
     init {
         // TODO: Experiment with drop packet instead of letting the player drop the item themself client-side.
@@ -54,14 +63,20 @@ object ProtectItem : Module(
     }
 
     private fun tryPreventDrop(item: ItemStack, event: CancellableEvent) {
-        if (itemList.any { it.uuid == item.itemUUID || it.sbID == item.itemId || it.name == item.customName?.string}) {
-            modMessage(
-                Component.literal("Prevented dropping ")
+        val foundItem =
+            if (item.itemUUID.isEmpty()) itemList.find { it.sbID == item.itemId || it.name == item.customName?.string }
+            else itemList.find { it.uuid == item.itemUUID } ?: return;
+
+        val now = System.currentTimeMillis()
+        if (!sendSound) modMessage(
+            Component.literal("Prevented dropping ")
                 .append(item.customName ?: item.hoverName)
                 .append(Component.literal("."))
-            )
-            event.cancel()
+        ) else if (now - lastPlayed > 100) {
+            playSoundSettings(soundSettings())
+            lastPlayed = now
         }
+        event.cancel()
     }
 
     data class ProtectedItem(val name: String?, val sbID: String, val uuid: String? = null)

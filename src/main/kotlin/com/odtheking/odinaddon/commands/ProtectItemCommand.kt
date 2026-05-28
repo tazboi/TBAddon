@@ -16,7 +16,9 @@ val protectItemCommand = Commodore("protectitem", "pi") {
 
         val protectedItem = ProtectItem.ProtectedItem(item.customName?.string, item.itemId, item.itemUUID)
         val itemList = ProtectItem.itemList
-        itemList.find { protectedItem.uuid == it.uuid || protectedItem.sbID == it.sbID }?.let {
+        val foundItem = if (protectedItem.uuid.isNullOrEmpty()) itemList.find{ protectedItem.sbID == it.sbID }
+                        else itemList.find{ protectedItem.uuid == it.uuid }
+        (foundItem)?.let {
             itemList.remove(it)
             modMessage(
                 Component.literal("Removed ")
