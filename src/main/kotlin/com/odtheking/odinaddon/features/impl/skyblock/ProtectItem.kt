@@ -63,9 +63,12 @@ object ProtectItem : Module(
     }
 
     private fun tryPreventDrop(item: ItemStack, event: CancellableEvent) {
+        if (item == ItemStack.EMPTY) return
+
         val foundItem =
             if (item.itemUUID.isEmpty()) itemList.find { it.sbID == item.itemId || it.name == item.customName?.string }
-            else itemList.find { it.uuid == item.itemUUID } ?: return;
+            else itemList.find { it.uuid == item.itemUUID }
+        if (foundItem == null) return
 
         val now = System.currentTimeMillis()
         if (!sendSound) modMessage(

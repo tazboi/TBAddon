@@ -11,6 +11,7 @@ import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.getBlockBounds
+import com.odtheking.odin.utils.isEtherwarpItem
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odinaddon.features.impl.skyblock.event.BlockOutlineEvent
@@ -63,6 +64,10 @@ object RenderModifier : Module(
 
         on<RenderEvent.Extract> {
             if (!blockOverlay) return@on
+
+            mc.player?.let {
+                if (it.mainHandItem.isEtherwarpItem() != null && it.isCrouching) return@on
+            }
             val blockLookingAt = (mc.hitResult as? BlockHitResult) ?: return@on
             val pos = blockLookingAt.blockPos.getBlockBounds()?.move(blockLookingAt.blockPos) ?: return@on
                 drawStyledBox(
