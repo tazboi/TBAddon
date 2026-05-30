@@ -14,7 +14,7 @@ import com.odtheking.odinaddon.features.impl.dungeon.Secrets
 import com.odtheking.odinaddon.features.impl.dungeon.MimicChestHighlight
 import com.odtheking.odinaddon.features.impl.boss.WitherHighlight
 import com.odtheking.odinaddon.features.impl.render.Animations
-import com.odtheking.odinaddon.features.impl.render.ItemRarity
+import com.odtheking.odinaddon.features.impl.render.ItemColor
 import com.odtheking.odinaddon.features.impl.render.PlayerDisplayPlus
 import com.odtheking.odinaddon.features.impl.render.RenderModifier
 import com.odtheking.odinaddon.features.impl.render.VisualWords
@@ -47,7 +47,8 @@ object OdinAddon : ClientModInitializer {
 
         // Register modules by adding to the function
         ModuleManager.registerModules(
-            ModuleConfig("UC30.json"), BowPullback, ItemRarity, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations,
+            ModuleConfig("UC30.json"), BowPullback,
+            ItemColor, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations,
             RenderModifier, PlayerDisplayPlus, VisualWords, ItemSwap, Sacks, Cooldowns
         )
     }
