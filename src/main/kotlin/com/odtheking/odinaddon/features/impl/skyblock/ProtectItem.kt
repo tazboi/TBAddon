@@ -42,16 +42,16 @@ object ProtectItem : Module(
         // TODO: Experiment with drop packet instead of letting the player drop the item themself client-side.
         on<DropEvent> {
             if (!preventDrop || item == null) return@on
-            if (DungeonUtils.inDungeons && !DungeonUtils.dungeonTeammates.isEmpty()) {
-                return@on
+            if (DungeonUtils.inDungeons) {
                 //val action = if (all) ServerboundPlayerActionPacket.Action.DROP_ALL_ITEMS else ServerboundPlayerActionPacket.Action.DROP_ITEM
                 //mc.player?.connection?.send(ServerboundPlayerActionPacket(action, BlockPos.ZERO, Direction.DOWN))
+                return@on
             }
             tryPreventDrop(item, this)
         }
 
         on<SlotInteractEvent> {
-            if (!preventDrop || clickType != ClickType.THROW || (DungeonUtils.inDungeons && !DungeonUtils.dungeonTeammates.isEmpty())) return@on
+            if (!preventDrop || clickType != ClickType.THROW) return@on
 
             val menu = (screen as? AbstractContainerScreen<*>)?.menu ?: return@on
             val slot = menu.getSlot(slotId)

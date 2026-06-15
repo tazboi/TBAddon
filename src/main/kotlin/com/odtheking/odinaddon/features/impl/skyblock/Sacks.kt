@@ -35,7 +35,7 @@ object Sacks : Module(
             if (!LocationUtils.isInSkyblock || mc.screen != null) return@on
             if (dungeonsOnly && !DungeonUtils.inDungeons) return@on
             if (LocationUtils.currentArea.equalsOneOf(Island.Unknown, Island.SinglePlayer, Island.PrivateIsland)) return@on
-            if (LocationUtils.currentArea.equalsOneOf(Island.Kuudra, Island.Dungeon) && (DungeonUtils.currentDungeonPlayer.isDead || mc.player!!.abilities!!.mayfly)) return@on
+            if (LocationUtils.currentArea.equalsOneOf(Island.Kuudra, Island.Dungeon) && (DungeonUtils.currentDungeonPlayer.isDead || mc.player!!.abilities.mayfly)) return@on
             if (mc.level == null) {
                 nextGFS = nextGFSDelay(7000)
                 return@on

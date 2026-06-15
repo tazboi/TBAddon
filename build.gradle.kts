@@ -67,8 +67,17 @@ afterEvaluate {
 
 tasks {
     processResources {
+        val fabricModProperties = mapOf(
+            "version" to project.version,
+            "loader_version" to project.property("loader_version"),
+            "kotlin_loader_version" to project.property("kotlin_loader_version"),
+            "minecraft_version" to project.property("minecraft_version")
+        )
+
+        inputs.properties(fabricModProperties)
+
         filesMatching("fabric.mod.json") {
-            expand(getProperties())
+            expand(fabricModProperties)
         }
     }
 

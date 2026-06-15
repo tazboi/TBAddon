@@ -18,6 +18,7 @@
     "AbstractContainerScreenMixin",
     "BlindnessFogEnvironmentMixin",
     "CameraMixin",
+    "ClientLevelMixin",
     "EffectsInInventoryMixin",
     "FontMixin",
     "GuiMixin",
@@ -28,6 +29,7 @@
     "LocalPlayerMixin",
     "MinecraftMixin",
     "MouseHandlerMixin",
+    "MultiPlayerGameModeMixin",
     "ScreenEffectRendererMixin"
   ]
 }

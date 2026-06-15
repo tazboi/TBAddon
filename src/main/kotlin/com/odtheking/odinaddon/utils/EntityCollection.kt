@@ -64,7 +64,7 @@ object EntityCache {
     }
 
     fun register(collection: EntityCollection) {
-        cache.add(collection);
+        cache.add(collection)
     }
 
 }

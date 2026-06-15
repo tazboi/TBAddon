@@ -10,6 +10,7 @@ import com.odtheking.odin.utils.ItemRarity
 import com.odtheking.odin.utils.equalsOneOf
 import com.odtheking.odin.utils.getSkyblockRarity
 import com.odtheking.odin.utils.loreString
+import com.odtheking.odin.utils.matchesOneOf
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odinaddon.features.impl.skyblock.event.HotbarSlotRenderEvent
 import com.odtheking.odinaddon.utils.findFirstTextWithColor
@@ -41,6 +42,11 @@ object ItemColor : Module(
 
     init {
         on<GuiEvent.RenderSlot> {
+            if ("Catacombs" in screen.title.string ||
+                "Kuudra" in screen.title.string) {
+                return@on
+            }
+
             val item = slot.item
             if (item.isEmpty) return@on
 

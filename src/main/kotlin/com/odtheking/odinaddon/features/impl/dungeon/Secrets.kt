@@ -10,6 +10,7 @@ import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.equalsOneOf
 import com.odtheking.odin.utils.itemId
+import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.textDim
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent
@@ -44,7 +45,7 @@ object Secrets : Module(
 
     private val secretHud by HUD("Secret Hud", desc = "Displays the number of secrets in a room.") { example ->
         if (example) textDim("§6Secrets 67/67", 0, 0, Colors.WHITE)
-        else if (!DungeonUtils.inDungeons && currSecrets.isEmpty()) {
+        else if (DungeonUtils.inDungeons && !currSecrets.isEmpty()) {
             textDim(currSecrets, 0, 0)
         }
         else return@HUD 0 to 0
@@ -54,6 +55,7 @@ object Secrets : Module(
     init {
         onReceive<ClientboundSystemChatPacket> {
             if (!overlay) return@onReceive
+
             if (!DungeonUtils.inDungeons) {
                 currSecrets = ""
                 return@onReceive

@@ -1,17 +1,32 @@
 package com.odtheking.odinaddon.features.impl.skyblock.event
 
+import com.odtheking.odin.OdinMod
 import com.odtheking.odin.events.core.onReceive
+import com.odtheking.odin.utils.handlers.schedule
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket
 
 object CustomEventDispatcher {
     init {
         onReceive<ClientboundPlayerPositionPacket> {
             if (!DungeonUtils.inDungeons || !DungeonUtils.inBoss) return@onReceive;
             EnterDungeonBossEvent(DungeonUtils.floor).postAndCatch()
+        }
+
+        onReceive<ClientboundAddEntityPacket> {
+            schedule(1) {
+                val world = OdinMod.mc.level ?: return@schedule
+                val entity = world.getEntity(id) ?: world.getEntity(uuid) ?: return@schedule
+
+                EntityWorldEvent.Join(entity, world).postAndCatch()
+            }
         }
 
         ClientEntityEvents.ENTITY_LOAD.register { entity, world ->
@@ -30,7 +45,7 @@ object CustomEventDispatcher {
             WorldEvent.Load().postAndCatch()
         }
 
-        ClientPlayConnectionEvents.DISCONNECT.register { _, _ ->
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register { _, _ ->
             WorldEvent.Unload().postAndCatch()
         }
     }
