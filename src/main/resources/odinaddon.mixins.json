@@ -4,7 +4,10 @@
   "package": "com.odtheking.odinaddon.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockInvoker",
+    "ButtonBlockMixin",
     "LevelChunkMixin",
+    "LeverBlockMixin",
     "LivingEntityMixin",
     "LocalPlayerMixin"
   ],
