@@ -45,3 +45,7 @@ fun findFirstTextWithColor(component: Component, targetColors: Set<TextColor>): 
     return found
 }
 
+fun String.removeUnicode(): String {
+    return this.replace(Regex("[^A-Za-z0-9 ]"), "")
+}
+
