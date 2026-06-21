@@ -29,6 +29,14 @@ object CustomEventDispatcher {
             }
         }
 
+        ClientEntityEvents.ENTITY_LOAD.register { entity, world ->
+            EntityWorldEvent.Join(entity, world).postAndCatch()
+        }
+
+        ClientEntityEvents.ENTITY_UNLOAD.register { entity, world ->
+            EntityWorldEvent.Leave(entity, world).postAndCatch()
+        }
+
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register { context, blockOutline ->
             !BlockOutlineEvent(context, blockOutline).postAndCatch()
         }
