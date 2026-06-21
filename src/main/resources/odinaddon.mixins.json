@@ -21,7 +21,6 @@
     "AbstractContainerScreenMixin",
     "BlindnessFogEnvironmentMixin",
     "CameraMixin",
-    "ClientLevelMixin",
     "EffectsInInventoryMixin",
     "FontMixin",
     "GuiMixin",

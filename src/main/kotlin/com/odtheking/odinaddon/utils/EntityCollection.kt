@@ -28,6 +28,8 @@ class EntityCollection(
         schedule(1) {
             predicate.takeIf { it(entity) } ?: return@schedule
             var toAdd = entity
+
+            if (this.any { it.id == entity.id }) return@schedule //(try) to prevent duplicates
             add?.let { toAdd = add.invoke(entity) ?: return@schedule }
 
             this.add(toAdd)

@@ -43,7 +43,7 @@ object ItemSwap: Module(
 
                 val itemInfo = secondItem.itemUUID.validOrNull() ?: secondItem.itemId.validOrNull() ?: return@on modMessage("Please use an item that has a Skyblock ID or UUID.")
                 swapMap[itemInfo] =
-                    SwapItem(item.displayName?.string, item.itemId, item.itemUUID)
+                    SwapItem(item.displayName.string, item.itemId, item.itemUUID)
 
                 ModuleManager.saveConfigurations()
                 modMessage(
@@ -86,7 +86,7 @@ object ItemSwap: Module(
     }
 
     fun ItemStack.matchesSwapItem(swapItem: SwapItem) : Boolean {
-        return this.itemUUID == swapItem.uuid || this.itemId == swapItem.sbID || this.displayName?.string == swapItem.name
+        return this.itemUUID == swapItem.uuid || this.itemId == swapItem.sbID || this.displayName.string == swapItem.name
     }
 
     fun String?.validOrNull() = takeUnless { it.isNullOrBlank() }

@@ -18,6 +18,7 @@ import com.odtheking.odinaddon.utils.getRoomData
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.decoration.ArmorStand
 import net.minecraft.world.entity.monster.Giant
+import kotlin.collections.find
 
 object DungeonMobs : Module(
     name = "Dungeon Mobs",
@@ -26,7 +27,7 @@ object DungeonMobs : Module(
     private val bloodMobs by HUD("Giant HP Hud", desc = "Displays the health of the blood giant.") { example ->
         if (example) textDim("Giant Name Here", 0, 0, bloodMobsColor)
         else if (DungeonUtils.inDungeons && !bloodMobCollection.isEmpty()) {
-            textDim(bloodMobCollection.first().customName?.string ?: "", 0, 0, bloodMobsColor)
+            textDim(bloodMobCollection.find { it.removalReason == null }?.customName?.string ?: "", 0, 0, bloodMobsColor)
         }
         else return@HUD 0 to 0
 
