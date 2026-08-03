@@ -2,11 +2,9 @@ package com.odtheking.odinaddon.features.impl.render
 
 import com.odtheking.odin.clickgui.settings.impl.MapSetting
 import com.odtheking.odin.features.Module
-import com.odtheking.odin.utils.modMessage
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.util.FormattedCharSequence
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
 
 object VisualWords : Module(
     name = "Visual Words",

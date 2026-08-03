@@ -2,10 +2,8 @@ package com.odtheking.odinaddon.features.impl.skyblock
 
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.ListSetting
-import com.odtheking.odin.events.GuiEvent
 import com.odtheking.odin.events.core.CancellableEvent
 import com.odtheking.odin.events.core.on
-import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.createSoundSettings
 import com.odtheking.odin.utils.itemId
@@ -16,12 +14,8 @@ import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.DropEvent
 import com.odtheking.odinaddon.features.impl.skyblock.event.SlotInteractEvent
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket
-import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
-import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.inventory.ContainerInput
 import net.minecraft.world.item.ItemStack
 
 object ProtectItem : Module(
@@ -51,7 +45,7 @@ object ProtectItem : Module(
         }
 
         on<SlotInteractEvent> {
-            if (!preventDrop || clickType != ClickType.THROW) return@on
+            if (!preventDrop || clickType != ContainerInput.THROW) return@on
 
             val menu = (screen as? AbstractContainerScreen<*>)?.menu ?: return@on
             val slot = menu.getSlot(slotId)

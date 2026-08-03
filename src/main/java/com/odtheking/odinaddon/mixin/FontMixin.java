@@ -14,7 +14,7 @@ public class FontMixin {
             method = "prepareText(Lnet/minecraft/util/FormattedCharSequence;FFIZZI)Lnet/minecraft/client/gui/Font$PreparedText;",
             at = @At("HEAD"),
             argsOnly = true,
-            index = 1
+            name = "text"
     )
     private FormattedCharSequence modifyText(FormattedCharSequence original) {
         if (!VisualWords.INSTANCE.getEnabled()) return original;

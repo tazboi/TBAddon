@@ -1,6 +1,5 @@
 package com.odtheking.odinaddon.features.impl.render
 
-import com.jcraft.jorbis.Block
 import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.ColorSetting
@@ -12,10 +11,8 @@ import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.getBlockBounds
 import com.odtheking.odin.utils.isEtherwarpItem
-import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odinaddon.features.impl.skyblock.event.BlockOutlineEvent
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 
 object RenderModifier : Module(

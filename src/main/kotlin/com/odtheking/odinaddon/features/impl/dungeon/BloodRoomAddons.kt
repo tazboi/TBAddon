@@ -8,15 +8,12 @@ import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.handlers.TickTask
-import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.textDim
-import com.odtheking.odin.utils.skyblock.LocationUtils
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odin.utils.texture
 import com.odtheking.odinaddon.features.impl.skyblock.event.WorldEvent
 import com.odtheking.odinaddon.utils.EntityCollection
 import com.odtheking.odinaddon.utils.Timer
-import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.monster.zombie.Zombie
@@ -126,7 +123,7 @@ object BloodRoomAddons : Module(
      * Resets all module-applicable values. Currently limited to blood camp feature.
      */
     private fun reset() {
-        bloodStarted = false;
+        bloodStarted = false
         dialogueSaid = false
         awaitingMove = false
 

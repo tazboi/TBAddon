@@ -1,23 +1,22 @@
 package com.odtheking.odinaddon.utils
 
-import com.odtheking.odin.utils.customData
-import com.odtheking.odin.utils.modMessage
-import com.odtheking.odin.utils.skyblock.dungeon.ScanUtils
-import com.odtheking.odin.utils.skyblock.dungeon.tiles.RoomData
+import com.odtheking.odin.OdinMod
+import com.odtheking.odin.OdinMod.mc
+import com.odtheking.odin.features.impl.dungeon.map.WorldScan
+import com.odtheking.odin.features.impl.dungeon.map.tile.RoomData
+import com.odtheking.odin.utils.IVec2
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
-import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
-fun getRoomData(x: Number, z: Number): RoomData? =
-    ScanUtils.coreToRoomData[
-        ScanUtils.getCore(
-            ScanUtils.getRoomCenter(
-                x.toInt(), z.toInt()
-            )
-        )
-    ]
+fun getRoomData(x: Int, z: Int): RoomData? {
+    val chunk = mc.level?.getChunk(x shr 4, z shr 4) ?: return null
+    //core, highestblock
+    val (core, _) = WorldScan.getRoomCore(chunk, IVec2(x * 32 - 185, z * 32 - 185))
+    return RoomData.getRoomData(core)
+
+}
 
 fun getColor(ticks: Int, maxTicks: Int, countdown: Boolean = false): String {
     return when {

@@ -1,7 +1,5 @@
 package com.odtheking.odinaddon.features.impl.render
 
-import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
-import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
 import com.odtheking.odin.events.GuiEvent
 import com.odtheking.odin.events.core.on

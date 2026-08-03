@@ -7,7 +7,6 @@ import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.modMessage
-import com.odtheking.odin.utils.noControlCodes
 import com.odtheking.odinaddon.features.impl.skyblock.event.EntityWorldEvent
 import com.odtheking.odinaddon.utils.removeUnicode
 import net.minecraft.network.chat.Component

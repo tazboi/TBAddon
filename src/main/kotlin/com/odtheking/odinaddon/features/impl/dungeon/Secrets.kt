@@ -10,7 +10,6 @@ import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.equalsOneOf
 import com.odtheking.odin.utils.itemId
-import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.textDim
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent
@@ -60,7 +59,7 @@ object Secrets : Module(
                 currSecrets = ""
                 return@onReceive
             }
-            currSecrets = SECRET_REGEX.find(content.string)?.value ?: "";
+            currSecrets = SECRET_REGEX.find(content.string)?.value ?: ""
         }
 
         on<ScreenEvent.Open> {

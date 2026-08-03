@@ -1,20 +1,17 @@
 package com.odtheking.odinaddon.features.impl.skyblock
 
-import com.odtheking.mixin.accessors.AbstractContainerScreenAccessor
 import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
 import com.odtheking.odin.clickgui.settings.impl.MapSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
-import com.odtheking.odin.events.GuiEvent
-import com.odtheking.odin.events.InputEvent
 import com.odtheking.odin.events.ScreenEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.features.ModuleManager
-import com.odtheking.odin.utils.handlers.schedule
 import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.itemUUID
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odinaddon.features.impl.skyblock.event.InputReleaseEvent
+import com.odtheking.odinaddon.mixin.AbstractContainerScreenAccessor
 import com.odtheking.odinaddon.mixin.KeyMappingAccessor
 import com.odtheking.odinaddon.utils.PlayerScheduler.scheduleSwap
 import net.minecraft.client.gui.screens.inventory.InventoryScreen
@@ -60,7 +57,7 @@ object ItemSwap: Module(
                     ModuleManager.saveConfigurations()
                     return@on modMessage(
                         Component.empty()
-                            .append(item.displayName)
+                                .append(item.displayName)
                             .append(Component.literal(" has been removed from Item Swaps."))
                     )
                 }

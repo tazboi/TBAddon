@@ -6,12 +6,10 @@ import com.odtheking.odin.utils.handlers.schedule
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
-import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket
-import net.minecraft.network.protocol.game.ClientboundEntityEventPacket
-import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket
 
 object CustomEventDispatcher {
     init {
@@ -37,7 +35,7 @@ object CustomEventDispatcher {
             EntityWorldEvent.Leave(entity, world).postAndCatch()
         }
 
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register { context, blockOutline ->
+        LevelRenderEvents.BEFORE_BLOCK_OUTLINE.register { context, blockOutline ->
             !BlockOutlineEvent(context, blockOutline).postAndCatch()
         }
 
@@ -45,7 +43,7 @@ object CustomEventDispatcher {
             WorldEvent.Load().postAndCatch()
         }
 
-        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register { _, _ ->
+        ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register { _, _ ->
             WorldEvent.Unload().postAndCatch()
         }
     }
