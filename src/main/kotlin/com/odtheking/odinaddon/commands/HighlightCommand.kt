@@ -9,19 +9,21 @@ import com.odtheking.odinaddon.features.impl.skyblock.Highlight2
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
-import java.lang.Exception
 
+val addRegex = Regex("""^(.+?)(?:\s+(#?[0-9A-Fa-f]{6}))?$""")
 val highlightCommand = Commodore("highlight", "hl") {
 
     literal("add", "a").runs { input: GreedyString ->
         val trimmed = input.string.trim()
 
-        if (trimmed.isEmpty()) return@runs modMessage("Invalid format. Use: /highlight add <mobname>")
-        if (Highlight2.highlightMap.containsKey(trimmed)) return@runs modMessage("$trimmed already exists in the highlight list.")
+        val match = addRegex.matchEntire(trimmed)
+        val mobName = match?.groupValues?.get(1)?.trim() ?: return@runs modMessage("Invalid format. Use: /highlight add <mobname> [#hex]")
+        if (Highlight2.highlightMap.containsKey(mobName)) return@runs modMessage("$mobName already exists in the highlight list.")
 
-        val color = Highlight2.defaultColor
-        Highlight2.highlightMap[trimmed] = color
-        modMessage("${trimmed} added to highlight list")
+        val color = match.groupValues[2].takeIf { it.trim().isNotEmpty()}?.removePrefix("#")?.toInt(16)?.let(::Color)
+            ?: Highlight2.defaultColor
+        Highlight2.highlightMap[mobName] = color
+        modMessage("${mobName} added to highlight list with color ${if (color == Highlight2.defaultColor) "default" else color.hex()}.")
         ModuleManager.saveConfigurations()
     }
 

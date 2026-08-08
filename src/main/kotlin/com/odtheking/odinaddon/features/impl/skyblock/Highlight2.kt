@@ -9,6 +9,7 @@ import com.odtheking.odin.events.core.on
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Color
+import com.odtheking.odin.utils.Color.Companion.withAlpha
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odin.utils.renderBoundingBox
 import com.odtheking.odinaddon.utils.EntityCollection
@@ -28,15 +29,20 @@ object Highlight2 : Module(
     var highlightMap = this.registerSetting(MapSetting("Highlight Map", mutableMapOf<String, Color>())).value
     private val OVERLOAD_REGEX = Regex("§f✯[\\s\\S]*?✯", RegexOption.DOT_MATCHES_ALL)
 
+    val idColorMap = mutableMapOf<Int, Color>()
     val highlightCollection = EntityCollection(
         { entity ->
             highlightMap.keys.any { key ->
                 val customName = entity.customName?.string ?: return@any false
-                (customName.contains(key)) && !OVERLOAD_REGEX.matches(customName)
+                (customName.contains(key, ignoreCase = true)) && !OVERLOAD_REGEX.matches(customName)
             }
         },
-        {
-            mc.level?.getEntities(it, it.boundingBox.move(0.0, -1.0, 0.0)) { isValid(it) }?.firstOrNull()
+        { entity ->
+            val target = mc.level?.getEntities(entity, entity.boundingBox.expandTowards(0.0, -1.0, 0.0)) { isValid(it) }?.firstOrNull() ?: return@EntityCollection null
+            val color = highlightMap.entries.find { entity.customName?.string?.contains(it.key, ignoreCase = true) == true }?.value ?: defaultColor
+
+            idColorMap[target.id] = color
+            target
         }
     )
 
@@ -44,10 +50,11 @@ object Highlight2 : Module(
         on<RenderEvent.Extract> {
             highlightCollection.forEach { entity ->
                 if (!entity.isAlive || entity.isRemoved) return@forEach
-                val colorkey = highlightMap.keys.find { entity.customName?.string?.lowercase()?.contains(it) ?: false } ?: defaultColor
+
+                val color = idColorMap[entity.id] ?: defaultColor
                 drawStyledBox(
                     entity.renderBoundingBox,
-                    highlightMap[colorkey] ?: defaultColor,
+                    color.withAlpha(defaultColor.alphaFloat),
                     renderStyle,
                     !trueESP
                 )
