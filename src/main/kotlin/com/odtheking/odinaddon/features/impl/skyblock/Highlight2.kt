@@ -10,14 +10,22 @@ import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Color
 import com.odtheking.odin.utils.Color.Companion.withAlpha
+import com.odtheking.odin.utils.containsOneOf
+import com.odtheking.odin.utils.equalsOneOf
+import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odin.utils.renderBoundingBox
+import com.odtheking.odinaddon.features.impl.skyblock.event.EntityWorldEvent
+import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent
 import com.odtheking.odinaddon.utils.EntityCollection
+import net.minecraft.network.chat.Component
+import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.boss.wither.WitherBoss
 import net.minecraft.world.entity.decoration.ArmorStand
 import net.minecraft.world.entity.player.Player
+import java.lang.reflect.Modifier
 
 object Highlight2 : Module(
     name = "Better Highlight",
