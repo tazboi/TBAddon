@@ -1,11 +1,8 @@
 package com.odtheking.odinaddon
 
-import com.odtheking.odin.clickgui.settings.impl.HUDSetting
-import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
 import com.odtheking.odin.config.ModuleConfig
 import com.odtheking.odin.events.core.EventBus
 import com.odtheking.odin.features.ModuleManager
-import com.odtheking.odin.features.Module
 import com.odtheking.odinaddon.commands.highlightCommand
 import com.odtheking.odinaddon.commands.odinAddonCommand
 import com.odtheking.odinaddon.commands.protectItemCommand
@@ -16,7 +13,7 @@ import com.odtheking.odinaddon.features.impl.boss.WitherHighlight
 import com.odtheking.odinaddon.features.impl.dungeon.BloodRoomAddons
 import com.odtheking.odinaddon.features.impl.dungeon.DungeonMobs
 import com.odtheking.odinaddon.features.impl.render.Animations
-import com.odtheking.odinaddon.features.impl.render.ChatModules
+import com.odtheking.odinaddon.features.impl.render.DamageParsing
 import com.odtheking.odinaddon.features.impl.render.ItemColor
 import com.odtheking.odinaddon.features.impl.render.PlayerDisplayPlus
 import com.odtheking.odinaddon.features.impl.render.RenderModifier
@@ -31,7 +28,6 @@ import com.odtheking.odinaddon.features.impl.skyblock.ItemSwap
 import com.odtheking.odinaddon.features.impl.skyblock.LoadoutKeybinds
 import com.odtheking.odinaddon.features.impl.skyblock.ProtectItem
 import com.odtheking.odinaddon.features.impl.skyblock.Sacks
-import com.odtheking.odinaddon.features.impl.skyblock.TestModule
 import com.odtheking.odinaddon.features.impl.skyblock.event.CustomEventDispatcher
 import com.odtheking.odinaddon.utils.EntityCache
 import com.odtheking.odinaddon.utils.PlayerScheduler
@@ -56,7 +52,7 @@ object OdinAddon : ClientModInitializer {
             ModuleConfig("UC30.json"), BowPullback,
             ItemColor, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations,
             RenderModifier, PlayerDisplayPlus, VisualWords, ItemSwap, Sacks, Cooldowns, ItemHelpers, DungeonMobs,
-            BigInteractables, ChatModules, BloodRoomAddons, LoadoutKeybinds
+            BigInteractables, DamageParsing, BloodRoomAddons, LoadoutKeybinds
         )
     }
 }
