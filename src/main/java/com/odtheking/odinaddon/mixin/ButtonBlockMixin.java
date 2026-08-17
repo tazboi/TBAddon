@@ -21,6 +21,10 @@ public class ButtonBlockMixin {
 
     @Unique
     private Function<BlockState, VoxelShape> tbaddon$customButtonShapes;
+    @Unique private double tbaddon$lastButtonWidth;
+    @Unique private double tbaddon$lastButtonHeight;
+    @Unique private double tbaddon$lastButtonDepth;
+    @Unique private boolean tbaddon$lastFloorsSetting;
 
     @Inject(
             method = "getShape",
@@ -35,8 +39,25 @@ public class ButtonBlockMixin {
             CallbackInfoReturnable<VoxelShape> cir
     ) {
         if (!BigInteractables.INSTANCE.getEnabled() || !BigInteractables.INSTANCE.getButtons()) return;
-        if (this.tbaddon$customButtonShapes == null) {
-            this.tbaddon$customButtonShapes = BigInteractables.INSTANCE.getFullBlockShapes((Block) (Object) this);
+        //Re-cache on changing custom size/doesn't exist/full block floors setting resets
+        if (
+                this.tbaddon$customButtonShapes == null ||
+                        this.tbaddon$lastButtonWidth != BigInteractables.INSTANCE.getButtonWidth() ||
+                        this.tbaddon$lastButtonHeight != BigInteractables.INSTANCE.getButtonHeight()  ||
+                        this.tbaddon$lastButtonDepth != BigInteractables.INSTANCE.getButtonDepth() ||
+                        this.tbaddon$lastFloorsSetting != BigInteractables.INSTANCE.getFullBlockFloors()
+        ) {
+            this.tbaddon$lastButtonWidth = BigInteractables.INSTANCE.getButtonWidth();
+            this.tbaddon$lastButtonHeight = BigInteractables.INSTANCE.getButtonHeight();
+            this.tbaddon$lastButtonDepth = BigInteractables.INSTANCE.getButtonDepth();
+            this.tbaddon$lastFloorsSetting = BigInteractables.INSTANCE.getFullBlockFloors();
+            this.tbaddon$customButtonShapes = BigInteractables.INSTANCE.getCustomAttachmentShapes(
+                    (Block) (Object) this,
+                    this.tbaddon$lastButtonWidth,
+                    this.tbaddon$lastButtonHeight,
+                    this.tbaddon$lastButtonDepth,
+                    this.tbaddon$lastFloorsSetting
+                    );
         }
 
         cir.setReturnValue(this.tbaddon$customButtonShapes.apply(blockState));

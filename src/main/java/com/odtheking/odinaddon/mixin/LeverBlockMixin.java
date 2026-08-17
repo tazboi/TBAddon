@@ -20,6 +20,10 @@ import java.util.function.Function;
 public class LeverBlockMixin {
 
     @Unique private Function<BlockState, VoxelShape> tbaddon$customLeverShapes;
+    @Unique private double tbaddon$lastLeverWidth;
+    @Unique private double tbaddon$lastLeverHeight;
+    @Unique private double tbaddon$lastLeverDepth;
+    @Unique private boolean tbaddon$lastFloorsSetting;
 
     @Inject(
             method = "getShape",
@@ -34,8 +38,24 @@ public class LeverBlockMixin {
             CallbackInfoReturnable<VoxelShape> cir
     ) {
         if (!BigInteractables.INSTANCE.getEnabled() || !BigInteractables.INSTANCE.getLevers()) return;
-        if (this.tbaddon$customLeverShapes == null) {
-            this.tbaddon$customLeverShapes = BigInteractables.INSTANCE.getFullBlockShapes((Block) (Object) this);
+        if (
+                this.tbaddon$customLeverShapes == null ||
+                        this.tbaddon$lastLeverWidth != BigInteractables.INSTANCE.getButtonWidth() ||
+                        this.tbaddon$lastLeverHeight != BigInteractables.INSTANCE.getButtonHeight()  ||
+                        this.tbaddon$lastLeverDepth != BigInteractables.INSTANCE.getButtonDepth() ||
+                        this.tbaddon$lastFloorsSetting != BigInteractables.INSTANCE.getFullBlockFloors()
+        )  {
+            this.tbaddon$lastLeverWidth = BigInteractables.INSTANCE.getLeverWidth();
+            this.tbaddon$lastLeverHeight = BigInteractables.INSTANCE.getLeverHeight();
+            this.tbaddon$lastLeverDepth = BigInteractables.INSTANCE.getLeverDepth();
+            this.tbaddon$lastFloorsSetting = BigInteractables.INSTANCE.getFullBlockFloors();
+            this.tbaddon$customLeverShapes = BigInteractables.INSTANCE.getCustomAttachmentShapes(
+                    (Block) (Object) this,
+                    this.tbaddon$lastLeverWidth,
+                    this.tbaddon$lastLeverHeight,
+                    this.tbaddon$lastLeverDepth,
+                    this.tbaddon$lastFloorsSetting
+            );
         }
 
         cir.setReturnValue(this.tbaddon$customLeverShapes.apply(blockState));
