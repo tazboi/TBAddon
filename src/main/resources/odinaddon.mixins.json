@@ -25,6 +25,7 @@
     "EffectsInInventoryMixin",
     "FontMixin",
     "GuiMixin",
+    "InventoryScreenMixin",
     "ItemInHandRendererMixin",
     "KeyboardHandlerMixin",
     "KeyMappingAccessor",
@@ -33,6 +34,7 @@
     "MinecraftMixin",
     "MouseHandlerMixin",
     "MultiPlayerGameModeMixin",
-    "ScreenEffectRendererMixin"
+    "ScreenEffectRendererMixin",
+    "ScreenMixin"
   ]
 }

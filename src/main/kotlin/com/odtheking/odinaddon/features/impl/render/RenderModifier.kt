@@ -13,6 +13,10 @@ import com.odtheking.odin.utils.getBlockBounds
 import com.odtheking.odin.utils.isEtherwarpItem
 import com.odtheking.odin.utils.render.drawStyledBox
 import com.odtheking.odinaddon.features.impl.skyblock.event.BlockOutlineEvent
+import com.odtheking.odinaddon.features.impl.skyblock.event.MouseEvent
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.world.phys.BlockHitResult
 
 object RenderModifier : Module(
@@ -51,7 +55,14 @@ object RenderModifier : Module(
         listOf("Filled", "Outline", "Filled Outline"),
         desc = "Style of the box."
     ).withDependency { blockOverlay }
-
+    val GUISize by NumberSetting(
+        "Custom GUI Size",
+        1,
+        1,
+        4,
+        1,
+        desc = "Modifies the GUI size of inventories."
+    )
 
     init {
         on<BlockOutlineEvent> {
@@ -75,5 +86,39 @@ object RenderModifier : Module(
 
         }
 
+    }
+
+    fun getCustomInventoryScale(): Double = (GUISize.toDouble() / mc.window.guiScale.toDouble())
+    fun transformInventoryMouse(xy: Double, dimension: Int): Double {
+        val center = dimension / 2.0
+        return center + (xy - center) / getCustomInventoryScale()
+    }
+    fun transformInventoryDelta(delta: Double): Double = delta / getCustomInventoryScale()
+    fun transformInventoryRender(xy: Double, dimension: Int): Double {
+        val center = dimension / 2.0
+        return center + (xy - center) * getCustomInventoryScale()
+    }
+
+    fun scaleGraphics(graphics: GuiGraphicsExtractor, screen: Screen) {
+        if (!enabled) return
+        if (screen !is AbstractContainerScreen<*>) return
+
+        val scale = getCustomInventoryScale().toFloat()
+        val cx = screen.width / 2.0f
+        val cy = screen.height / 2.0f
+
+        graphics.pose().apply {
+            pushMatrix()
+            translate(cx, cy)
+            scale(scale, scale)
+            translate(-cx, -cy)
+        }
+    }
+
+    fun unscaleGraphics(graphics: GuiGraphicsExtractor, screen: Screen) {
+        if (!enabled) return
+        if (screen !is AbstractContainerScreen<*>) return
+
+        graphics.pose().popMatrix()
     }
 }
