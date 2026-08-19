@@ -8,9 +8,12 @@ import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.createSoundSettings
 import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.itemUUID
+import com.odtheking.odin.utils.lore
+import com.odtheking.odin.utils.loreString
 import com.odtheking.odin.utils.modMessage
 import com.odtheking.odin.utils.playSoundSettings
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
+import com.odtheking.odinaddon.features.impl.skyblock.ProtectItem.itemList
 import com.odtheking.odinaddon.features.impl.skyblock.event.DropEvent
 import com.odtheking.odinaddon.features.impl.skyblock.event.SlotInteractEvent
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -22,7 +25,6 @@ object ProtectItem : Module(
     name = "Item Protect",
     description = "Protects selected items from being dropped."
 ) {
-    private val preventDrop by BooleanSetting("Dropping", true, desc = "Prevent dropping whitelisted items.")
     private val sendSound by BooleanSetting(
         "Drop Cancel Sound",
         false,
@@ -35,7 +37,7 @@ object ProtectItem : Module(
     init {
         // TODO: Experiment with drop packet instead of letting the player drop the item themself client-side.
         on<DropEvent> {
-            if (!preventDrop || item == null) return@on
+            if (item == null) return@on
             if (DungeonUtils.inDungeons) {
                 //val action = if (all) ServerboundPlayerActionPacket.Action.DROP_ALL_ITEMS else ServerboundPlayerActionPacket.Action.DROP_ITEM
                 //mc.player?.connection?.send(ServerboundPlayerActionPacket(action, BlockPos.ZERO, Direction.DOWN))
@@ -45,11 +47,17 @@ object ProtectItem : Module(
         }
 
         on<SlotInteractEvent> {
-            if (!preventDrop || clickType != ContainerInput.THROW) return@on
-
             val menu = (screen as? AbstractContainerScreen<*>)?.menu ?: return@on
+            val inAH = screen.title.string.contains("Auction") //may need to be changed in future
+            val sellable = menu.slots.any {
+                it.item.loreString.contains("Click to buyback!") ||
+                it.item.customName?.string?.contains("Sell Item") ?: false
+            }
+
             val slot = menu.getSlot(slotId)
-            val item = slot.item
+            val item = slot.item.takeIf { it != ItemStack.EMPTY } ?: return@on
+
+            if (!inAH && !item.loreString.contains("pickup") && !sellable && clickType != ContainerInput.THROW) return@on
 
             tryPreventDrop(item, this)
         }
@@ -57,10 +65,11 @@ object ProtectItem : Module(
     }
 
     private fun tryPreventDrop(item: ItemStack, event: CancellableEvent) {
-        if (item == ItemStack.EMPTY) return
-
         val foundItem =
-            if (item.itemUUID.isEmpty()) itemList.find { it.sbID == item.itemId || it.name == item.customName?.string }
+            if (item.itemUUID.isEmpty()) itemList.find {
+                (item.itemId.isNotEmpty() && it.sbID == item.itemId) ||
+                        it.name == item.customName?.string
+            }
             else itemList.find { it.uuid == item.itemUUID }
         if (foundItem == null) return
 
