@@ -2,7 +2,7 @@ package com.odtheking.odinaddon.features.impl.dungeon
 
 import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.DropdownSetting
-import com.odtheking.odin.events.ChatPacketEvent
+import com.odtheking.odin.events.ChatMessageEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
@@ -65,7 +65,7 @@ object BloodRoomAddons : Module(
     private var moveTime = Timer()
 
     init {
-        on<ChatPacketEvent> {
+        on<ChatMessageEvent> {
             if (!DungeonUtils.inClear) return@on
 
             when {

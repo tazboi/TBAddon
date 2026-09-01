@@ -3,6 +3,7 @@ package com.odtheking.odinaddon.features.impl.skyblock
 import com.odtheking.odin.clickgui.settings.impl.KeybindSetting
 import com.odtheking.odin.clickgui.settings.impl.MapSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
+import com.odtheking.odin.events.ScreenCloseEvent
 import com.odtheking.odin.events.ScreenEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
@@ -66,7 +67,7 @@ object ItemSwap: Module(
             }
         }
 
-        on<ScreenEvent.Close> {
+        on<ScreenCloseEvent> {
             previousItem = null
         }
 
