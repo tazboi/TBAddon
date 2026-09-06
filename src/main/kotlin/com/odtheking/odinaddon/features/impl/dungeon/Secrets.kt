@@ -9,10 +9,12 @@ import com.odtheking.odin.events.core.onReceive
 import com.odtheking.odin.features.Module
 import com.odtheking.odin.utils.Colors
 import com.odtheking.odin.utils.equalsOneOf
+import com.odtheking.odin.utils.handlers.schedule
 import com.odtheking.odin.utils.itemId
 import com.odtheking.odin.utils.render.textDim
 import com.odtheking.odin.utils.skyblock.dungeon.DungeonUtils
 import com.odtheking.odinaddon.features.impl.skyblock.event.PlayerInteractEvent
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.protocol.game.ClientboundSystemChatPacket
 import net.minecraft.world.level.block.ChestBlock
 import net.minecraft.world.level.block.TrappedChestBlock
@@ -63,16 +65,20 @@ object Secrets : Module(
         }
 
         on<ScreenEvent.Open> {
-            if (closeChestOption != 0 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
+            if (screen !is AbstractContainerScreen<*> || closeChestOption != 0 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
                     "Chest",
                     "Large Chest"
                 )
             ) return@on
-            mc.player?.closeContainer()
+            schedule(1) {
+                mc.player?.containerMenu.let {
+                    mc.player?.closeContainer()
+                }
+            }
         }
 
         on<ScreenEvent.KeyPress> {
-            if (closeChestOption != 1 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
+            if (screen !is AbstractContainerScreen<*> || closeChestOption != 1 || !closeChest || !DungeonUtils.inDungeons || !screen.title.string.equalsOneOf(
                     "Chest",
                     "Large Chest"
                 )
