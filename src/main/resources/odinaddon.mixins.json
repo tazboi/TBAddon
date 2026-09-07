@@ -31,6 +31,7 @@
     "KeyMappingAccessor",
     "KeyMappingMixin",
     "LocalPlayerMixin",
+    "MapRendererMixin",
     "MinecraftMixin",
     "MouseHandlerMixin",
     "MultiPlayerGameModeMixin",

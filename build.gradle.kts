@@ -11,6 +11,9 @@ group = property("maven_group")!!
 version = property("mod_version")!!
 
 repositories {
+    maven {
+        url = uri(layout.projectDirectory.dir(".gradle/odin-local-maven"))
+    }
     mavenCentral()
     maven("https://jitpack.io")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
@@ -35,7 +38,7 @@ dependencies {
     implementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
 
     runtimeOnly("me.djtheredstoner:DevAuth-fabric:${property("devauth_version")}")
-    implementation("com.odtheking:Odin:${property("odin_version")}@jar")
+    implementation("com.odtheking:Odin:${property("odin_version")}")
 
     property("commodore_version").let {
         implementation("com.github.stivais:Commodore:$it")

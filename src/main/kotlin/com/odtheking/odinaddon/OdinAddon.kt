@@ -12,6 +12,7 @@ import com.odtheking.odinaddon.features.impl.dungeon.MimicChestHighlight
 import com.odtheking.odinaddon.features.impl.boss.WitherHighlight
 import com.odtheking.odinaddon.features.impl.dungeon.BloodRoomAddons
 import com.odtheking.odinaddon.features.impl.dungeon.DungeonMobs
+import com.odtheking.odinaddon.features.impl.dungeon.SillyMap
 import com.odtheking.odinaddon.features.impl.render.Animations
 import com.odtheking.odinaddon.features.impl.render.DamageParsing
 import com.odtheking.odinaddon.features.impl.render.ItemColor
@@ -31,6 +32,7 @@ import com.odtheking.odinaddon.features.impl.skyblock.Sacks
 import com.odtheking.odinaddon.features.impl.skyblock.event.CustomEventDispatcher
 import com.odtheking.odinaddon.utils.EntityCache
 import com.odtheking.odinaddon.utils.PlayerScheduler
+import com.odtheking.odinaddon.utils.render.DoorScanner
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 
@@ -45,14 +47,14 @@ object OdinAddon : ClientModInitializer {
         }
 
         // Register objects to event bus by adding to the list
-        listOf(this, CustomEventDispatcher, EntityCache, PlayerScheduler).forEach { EventBus.subscribe(it) }
+        listOf(this, CustomEventDispatcher, EntityCache, PlayerScheduler, DoorScanner).forEach { EventBus.subscribe(it) }
 
         // Register modules by adding to the function
         ModuleManager.registerModules(
             ModuleConfig("UC30.json"), BowPullback,
             ItemColor, Click, WitherHighlight, MimicChestHighlight, Highlight2, ProtectItem, Secrets, Animations,
             RenderModifier, PlayerDisplayPlus, VisualWords, ItemSwap, Sacks, Cooldowns, ItemHelpers, DungeonMobs,
-            BigInteractables, DamageParsing, BloodRoomAddons, LoadoutKeybinds
+            BigInteractables, DamageParsing, BloodRoomAddons, LoadoutKeybinds, SillyMap
         )
     }
 }
