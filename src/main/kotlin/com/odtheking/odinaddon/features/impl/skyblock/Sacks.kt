@@ -3,7 +3,7 @@ package com.odtheking.odinaddon.features.impl.skyblock
 import com.odtheking.odin.clickgui.settings.Setting.Companion.withDependency
 import com.odtheking.odin.clickgui.settings.impl.BooleanSetting
 import com.odtheking.odin.clickgui.settings.impl.NumberSetting
-import com.odtheking.odin.events.ChatMessageEvent
+import com.odtheking.odin.events.MessageEvent
 import com.odtheking.odin.events.RenderEvent
 import com.odtheking.odin.events.core.on
 import com.odtheking.odin.features.Module
@@ -46,10 +46,10 @@ object Sacks : Module(
             if (jerries) autoFillItemFromSacks("INFLATABLE_JERRY", "inflatable jerry")
         }
 
-        on<ChatMessageEvent> {
+        on<MessageEvent> {
             when {
-                value.matches(RECENT_JOIN_REGEX) -> nextGFS = nextGFSDelay(5000)
-                value.matches(SACKS_REGEX) -> nextGFS = nextGFSDelay(delay)
+                message.matches(RECENT_JOIN_REGEX) -> nextGFS = nextGFSDelay(5000)
+                message.matches(SACKS_REGEX) -> nextGFS = nextGFSDelay(delay)
             }
         }
     }
